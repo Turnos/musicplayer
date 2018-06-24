@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".PlayerActivity"></activity>
+        <activity android:name=".ArtistsActivity"></activity>
+        <activity android:name=".PlaylistActivity"></activity>
     </application>
 
 </manifest>
