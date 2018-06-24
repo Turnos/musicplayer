@@ -21,7 +21,7 @@
             android:id="@+id/top_button"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:text="@string/Random" />
+            tools:text="Random" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,10 +31,10 @@
 
             <Button
                 android:id="@+id/left_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="@string/Artists" />
+                tools:text="Artists" />
 
             <Space
                 android:layout_width="120dp"
@@ -43,17 +43,17 @@
 
             <Button
                 android:id="@+id/right_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="@string/Lists" />
+                tools:text="Lists" />
         </LinearLayout>
 
         <Button
             android:id="@+id/bottom_button"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:text="@string/Info" />
+            tools:text="Info" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

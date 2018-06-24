@@ -1,15 +1,3 @@
 <resources>
     <string name="app_name">Musicplayer</string>
-    <string name="Random">Random</string>
-    <string name="Artists">Artists</string>
-    <string name="Lists">Lists</string>
-    <string name="Info">Info</string>
-    <string name="Play">Play</string>
-    <string name="Shuffle">Shuffle</string>
-    <string name="Next">Next</string>
-    <string name="Prev">Prev</string>
-    <string name="plus_button">Plus</string>
-    <string name="player_artist">Artistic</string>
-    <string name="player_length">1:00</string>
-    <string name="player_title">New Arts</string>
 </resources>

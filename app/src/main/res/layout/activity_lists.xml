@@ -22,12 +22,12 @@
             android:id="@+id/plus_button"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:text="@string/plus_button" />
+            android:text="plus_button" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/playlist_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/plus_button"
             tools:listitem="@android:layout/simple_list_item_1" />
 
     </LinearLayout>
