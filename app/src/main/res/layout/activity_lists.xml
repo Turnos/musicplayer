@@ -22,7 +22,7 @@
             android:id="@+id/plus_button"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:text="plus_button" />
+            android:text="@string/plus_button" />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
