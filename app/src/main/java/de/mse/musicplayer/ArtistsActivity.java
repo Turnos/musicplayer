@@ -8,33 +8,37 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import de.mse.musicplayer.ListAdministration.AudioReader;
+import de.mse.musicplayer.ListAdministration.Song;
 import de.mse.musicplayer.layoutClasses.RecyclerViewAdapter;
+
+import static de.mse.musicplayer.MainActivity.audioList;
+
 
 public class ArtistsActivity extends Activity{
 
     private static final String TAG = "ArtistsActivity";
 
-    private ArrayList<String> listOfArtists = new ArrayList<>();
-    private AudioReader trackAdministration;
+    private ArrayList<String> listOfArtists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artists);
         Log.d(TAG, "onCreate: started");
-        this.initializeTracks();
+        this.listOfArtists = initializeArtistNames();
         this.initializeRecyclerView();
     }
 
-    private void initializeTracks() {
-        //this.trackAdministration = new AudioReader(this);
-        //this.listOfArtists = trackAdministration.getArtists();
-        //TODO EDIT THIS HARDCODE
-        this.listOfArtists.add("BLA|BLABLA");
-        this.listOfArtists.add("YO|YOYOYO");
-        this.listOfArtists.add("NA|NANANA");
-        this.listOfArtists.add("HA|HAHAHA");
+    private ArrayList<String> initializeArtistNames() {
+        ArrayList<String> artistList = new ArrayList<>();
+        ArrayList<Song> songList = audioList.getList();
+        for (Song e: songList){
+            if (!artistList.contains(e.getArtist())){
+                Log.d(TAG, "initializeArtistNames: " + e.getArtist() + " added.");
+                artistList.add(e.getArtist());
+            }
+        }
+        return artistList;
     }
 
     private void initializeRecyclerView (){

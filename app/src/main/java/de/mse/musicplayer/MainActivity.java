@@ -1,17 +1,77 @@
 package de.mse.musicplayer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import de.mse.musicplayer.ListAdministration.AudioReader;
 
 public class MainActivity extends Activity {
+
+    private static final String TAG = "MainActivity";
+    private static final int MY_PERMISSION_REQUEST = 1;
+    public static AudioReader audioList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: " + this.checkPermissions());
+        this.initializeAudioReader();
         this.initializeUI();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //User answered Permission Request
+        switch(requestCode){
+            case MY_PERMISSION_REQUEST:{
+                //User granted Permission?
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    if(ContextCompat.checkSelfPermission(MainActivity.this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
+                        //TODO
+                    }
+                }else{
+                    //User denied Permission
+                    Toast.makeText(this, "No permission granted!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                return;
+            }
+        }
+    }
+
+    private boolean checkPermissions(){
+        if(ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            //show Permission Request
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)){
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSION_REQUEST);
+            }else{
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSION_REQUEST);
+            }
+        }else{
+            //permissions already granted, you are ready to read EXTERNAL_STORAGE
+            Log.d(TAG, "checkPermissions: TRUE");
+            return true;
+        }
+        Log.d(TAG, "checkPermissions: FALSE");
+        return false;
     }
 
     private void initializeUI(){
@@ -58,5 +118,9 @@ public class MainActivity extends Activity {
                 //startActivity(switcher);
             }
         });
+    }
+
+    private void initializeAudioReader(){
+        audioList = new AudioReader(this, this);
     }
 }

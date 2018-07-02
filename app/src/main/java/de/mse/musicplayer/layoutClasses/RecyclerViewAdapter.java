@@ -16,12 +16,12 @@ import de.mse.musicplayer.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "RecyclerViewAdapter";
-    private ArrayList<String> listOfNames;
+    private ArrayList<String> listOfArtistNames;
     //private ArrayList<String> listOfImages = new ArrayList<>();
     private Context context;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> listOfNames) {
-        this.listOfNames = listOfNames;
+    public RecyclerViewAdapter(Context context, ArrayList<String> listOfArtistNames) {
+        this.listOfArtistNames = listOfArtistNames;
         this.context = context;
     }
 
@@ -36,19 +36,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: item is added to the list.");
-        holder.entryName.setText(listOfNames.get(position));
+        holder.entryName.setText(listOfArtistNames.get(position));
         holder.layoutRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: Entry was clicked on: " + listOfNames.get(position));
-                //TODO Action for list_item
+                //TODO add Code for MediaPlayer
+                Log.d(TAG, "onClick: Entry was clicked on: " + listOfArtistNames.get(position));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return listOfNames.size();
+        return listOfArtistNames.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
