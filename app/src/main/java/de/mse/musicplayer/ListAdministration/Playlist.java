@@ -18,4 +18,14 @@ public class Playlist {
     public ArrayList<Song> getPlaylistContent() {
         return playlistContent;
     }
+
+    public void addSong(Song song) {
+        this.playlistContent.add(song);
+    }
+
+    public void addAllSongs(ArrayList<Song> list){
+        for (Song e: list){
+            this.playlistContent.add(e);
+        }
+    }
 }

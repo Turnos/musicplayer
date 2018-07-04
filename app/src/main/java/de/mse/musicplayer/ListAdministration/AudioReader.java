@@ -18,7 +18,7 @@ public class AudioReader {
 
     private ArrayList<Song> listOfTracks;
 
-    public AudioReader(Context context, Activity activity){
+    public AudioReader(Context context, Activity activity) {
         this.context = context;
         this.activity = activity;
         this.listOfTracks = this.getAllSongsFromStorage();
@@ -28,7 +28,8 @@ public class AudioReader {
         return this.listOfTracks;
     }
 
-    private ArrayList<Song> getAllSongsFromStorage () {
+    private ArrayList<Song> getAllSongsFromStorage() {
+        Log.d(TAG, "getAllSongsFromStorage: started");
         ArrayList<Song> list = new ArrayList<>();
 
         ContentResolver contentResolver = context.getContentResolver();
@@ -36,22 +37,32 @@ public class AudioReader {
         String selection = MediaStore.Audio.Media.IS_MUSIC + "!=0";
         Cursor songCursor = contentResolver.query(songUri, null, selection,
                 null, null);
-        if(songCursor != null && songCursor.moveToFirst()){
+        if (songCursor != null && songCursor.moveToFirst()) {
             int songTitle = songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int songArtist = songCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
             int songUrl = songCursor.getColumnIndex(MediaStore.Audio.Media.DATA);
 
-            while(songCursor.moveToNext()) {
+            while (songCursor.getCount() > songCursor.getPosition()) {
                 String currentTitle = songCursor.getString(songTitle);
                 String currentArtist = songCursor.getString(songArtist);
                 String currentUrl = songCursor.getString(songUrl);
-                if(currentUrl.endsWith(".mp3")){
+                if (currentUrl.endsWith(".mp3")) {
                     //If file is mp3, then add it to the list.
-                    list.add(new Song(currentTitle, currentArtist, currentUrl));
+                    list.add(new Song(currentArtist, currentTitle, currentUrl));
+                    Log.d(TAG, "getAllSongsFromStorage: Audio found = " + currentTitle);
                 }
+                songCursor.moveToNext();
             }
         }
         Log.d(TAG, "getAllSongsFromStorage: List size is " + list.size());
         return list;
+    }
+
+    public Song getSong(String artist, String title) {
+        for (Song e : listOfTracks) {
+            if (e.getTitle() == title && e.getArtist() == artist) return e;
+        }
+        return null;
+
     }
 }

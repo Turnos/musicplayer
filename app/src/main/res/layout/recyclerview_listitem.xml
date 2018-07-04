@@ -16,7 +16,7 @@
         android:text="Android Test"
         android:textColor="#000"
         android:textSize="17sp"
-        android:id="@+id/txt_artist"
+        android:id="@+id/txt_itemtext"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/placeholder"/>
 

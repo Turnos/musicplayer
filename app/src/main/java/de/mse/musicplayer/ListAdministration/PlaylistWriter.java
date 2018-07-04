@@ -22,10 +22,10 @@ public class PlaylistWriter {
         String path = context.getFilesDir() + "/playlists/";
 
         try {
-            FileWriter writer = new FileWriter(new File(path, playlist.getPlaylistName() + ".txt"));
+            FileWriter writer = new FileWriter(new File(path,  "playlists.txt"));
 
             for (Song e: tempPlaylist){
-                writer.write(e.getArtist() + "|" + e.getTitle());
+                writer.write(playlist.getPlaylistName() + "|" + e.getArtist() + "|" + e.getTitle() + "/n)");
             }
         } catch (IOException e) {
             e.printStackTrace();
