@@ -46,8 +46,7 @@ public class PlaylistActivity extends Activity{
     private void initializePlaylists() {
         PlaylistBuilder playlistBuilder = new PlaylistBuilder(this);
         playlists = playlistBuilder.getPlaylists();
-        if (playlists == null){
-            playlists = new ArrayList<>();
+        if (playlists.isEmpty()){
             playlists.add(new Playlist("You haven't got any playlist", null));
         }
     }

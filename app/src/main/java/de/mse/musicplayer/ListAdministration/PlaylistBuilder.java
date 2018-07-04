@@ -4,9 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class PlaylistBuilder {
 
     public PlaylistBuilder (Context context) {
         this.context = context;
+        this.initializePlaylists();
     }
 
     public ArrayList<Playlist> getPlaylists() {
@@ -37,18 +39,21 @@ public class PlaylistBuilder {
 
     private ArrayList<String> readFromStorage (){
         ArrayList<String> list = new ArrayList<>();
-        String path = context.getFilesDir() + "/playlists/playlists.txt";
+        //TODO delete this hardcode
+        list.add("Playlist|Artist|Title1");
+        list.add("Playlist|Artist|Title2");
+        list.add("Playlist|Artist|Title3");
         try {
-            InputStream inputStream = context.openFileInput(path);
-            if (inputStream != null){
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader reader = new BufferedReader(inputStreamReader);
-                String buffer;
-                while ((buffer = reader.readLine() )!= null){
-                    list.add(buffer);
-                }
-                inputStream.close();
-            }
+            FileInputStream inputStream = new FileInputStream (new File("playlists.txt"));
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String buffer;
+            Log.d(TAG, "readFromStorage: " + reader.readLine());
+            while ((buffer = reader.readLine() )!= null){
+                list.add(buffer);
+                Log.d(TAG, "readFromStorage: " + buffer);
+        }
+            inputStream.close();
         } catch (FileNotFoundException e) {
             Log.d(TAG, "initializePlaylists: No PlaylistFile");
         } catch (IOException e) {
@@ -68,7 +73,6 @@ public class PlaylistBuilder {
     }
 
     private void addElementToNewPlaylist(String[] elements) {
-        //TODO
         Song e = audioList.getSong(elements[1], elements[2]);
         if (e != null){
             ArrayList<Song> songList = new ArrayList<>();
@@ -82,7 +86,6 @@ public class PlaylistBuilder {
     }
 
     private void addElementToExistingPlaylist(String[] elements, Playlist playlist) {
-        //TODO
         Song e = audioList.getSong(elements[1], elements[2]);
         if (e != null){
             playlist.addSong(e);

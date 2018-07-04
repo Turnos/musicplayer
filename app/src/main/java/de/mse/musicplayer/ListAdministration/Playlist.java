@@ -24,8 +24,6 @@ public class Playlist {
     }
 
     public void addAllSongs(ArrayList<Song> list){
-        for (Song e: list){
-            this.playlistContent.add(e);
-        }
+        this.playlistContent.addAll(list);
     }
 }

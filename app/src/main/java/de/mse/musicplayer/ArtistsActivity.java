@@ -34,7 +34,7 @@ public class ArtistsActivity extends Activity{
         ArrayList<Song> songList = audioList.getList();
         for (Song e: songList){
             if (!artistList.contains(e.getArtist())){
-                Log.d(TAG, "initializeArtistNames: " + e.getArtist() + " + " + e.getTitle() + " added.");
+                Log.d(TAG, "initializeArtistNames: " + e.getArtist() + " added.");
                 artistList.add(e.getArtist());
             }
         }

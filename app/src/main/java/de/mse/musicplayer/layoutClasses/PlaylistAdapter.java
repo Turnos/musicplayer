@@ -3,6 +3,7 @@ package de.mse.musicplayer.layoutClasses;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 
 import de.mse.musicplayer.ListAdministration.Playlist;
 import de.mse.musicplayer.R;
+
+import static android.content.ContentValues.TAG;
 
 public class PlaylistAdapter extends ArrayAdapter<Playlist>{
     private Context mContext;
@@ -33,8 +36,8 @@ public class PlaylistAdapter extends ArrayAdapter<Playlist>{
         }
         TextView playlistTitle = listItem.findViewById(R.id.lv_playlisttitle);
 
-        // TODO setText = playlistTitle
         Playlist playlist = playlists.get(position);
+        Log.d(TAG, "getView: " + playlist.getPlaylistName());
         playlistTitle.setText(playlist.getPlaylistName());
 
         return listItem;
