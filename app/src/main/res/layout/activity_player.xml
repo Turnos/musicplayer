@@ -43,9 +43,8 @@
                 android:text="@string/player_length" />
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
+        <SeekBar
+            android:id="@+id/seekbar_audio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

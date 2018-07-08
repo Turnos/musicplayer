@@ -4,13 +4,24 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+
+
 
 public class PlayerActivity extends Activity {
+
+    private PlayerAdapter mPlayerAdapter;
+    private SeekBar mSeekbarAudio;
+    private boolean mUserIsSeeking = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
         this.initializeUI();
+        this.initializeSeekBar();
+        this.initializePlaybackController();
     }
 
     private void initializeUI(){
@@ -20,6 +31,11 @@ public class PlayerActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // TODO implement Music.Play
+                if(mPlayerAdapter.isPlaying()){
+                    mPlayerAdapter.pause();
+                }else{
+                    mPlayerAdapter.play();
+                }
             }
         });
 
@@ -47,7 +63,70 @@ public class PlayerActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // TODO implement Shuffling the current playlist
+                //First release current MediaPlayer
+                mPlayerAdapter.release();
+                mPlayerAdapter.shuffle(); //then shuffle the current playlist
+
+
+            }
+        });
+
+        //SeekBar
+        mSeekbarAudio = (SeekBar) findViewById(R.id.seekbar_audio);
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if(isChangingConfigurations() && mPlayerAdapter.isPlaying() ){
+            //Don't release Mediaplayer as screen is rotating & playing
+        }else{
+            mPlayerAdapter.release();
+        }
+    }
+
+    private void initializeSeekBar(){
+        mSeekbarAudio.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int userSelectedPosition = 0;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(fromUser){
+                    userSelectedPosition = progress;
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                mUserIsSeeking = true;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mUserIsSeeking = false;
+                mPlayerAdapter.seekTo(userSelectedPosition);
             }
         });
     }
+
+    private void initializePlaybackController(){
+        MediaPlayerHolder mMediaPlayerHolder = new MediaPlayerHolder(this);
+        mMediaPlayerHolder.setPlaybackInfoListener(new PlaybackListener());
+        mPlayerAdapter = mMediaPlayerHolder;
+    }
+
+    public class PlaybackListener extends PlaybackInfoListener{
+        @Override
+        void onDurationChanged(int duration) {
+            mSeekbarAudio.setMax(duration);
+        }
+
+        @Override
+        void onPositionChanged(int position) {
+            if(!mUserIsSeeking){
+                mSeekbarAudio.setProgress(position);
+            }
+        }
+    }
+
+
 }

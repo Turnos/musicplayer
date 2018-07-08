@@ -65,4 +65,12 @@ public class AudioReader {
         return null;
 
     }
+
+    public ArrayList<Song> getTracksOfArtist(String artist) {
+        ArrayList<Song> tracksOfArtist = new ArrayList<>();
+        for (Song e : listOfTracks){
+            if(e.getArtist().equals(artist)) tracksOfArtist.add(e);
+        }
+        return tracksOfArtist;
+    }
 }
