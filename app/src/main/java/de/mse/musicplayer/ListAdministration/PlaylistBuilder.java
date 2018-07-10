@@ -1,6 +1,5 @@
 package de.mse.musicplayer.ListAdministration;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -11,20 +10,31 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static de.mse.musicplayer.MainActivity.audioList;
-
 public class PlaylistBuilder {
     private static final String TAG = "PlaylistBuilder ";
-    private Context context;
+    private static PlaylistBuilder instance;
     private ArrayList<Playlist> playlists;
 
-    public PlaylistBuilder (Context context) {
-        this.context = context;
+    private PlaylistBuilder () {
         this.initializePlaylists();
+    }
+
+    public static PlaylistBuilder getInstance(){
+        if (instance == null){
+            instance = new PlaylistBuilder();
+        }
+        return instance;
     }
 
     public ArrayList<Playlist> getPlaylists() {
         return playlists;
+    }
+
+    public Playlist getPlaylistByName (String playlistName){
+        for (Playlist e: playlists){
+            if (e.getPlaylistName().equals(playlistName)) return e;
+        }
+        return null;
     }
 
     private void initializePlaylists (){
@@ -39,10 +49,6 @@ public class PlaylistBuilder {
 
     private ArrayList<String> readFromStorage (){
         ArrayList<String> list = new ArrayList<>();
-        //TODO delete this hardcode
-        list.add("Playlist|Artist|Title1");
-        list.add("Playlist|Artist|Title2");
-        list.add("Playlist|Artist|Title3");
         try {
             FileInputStream inputStream = new FileInputStream (new File("playlists.txt"));
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -73,7 +79,7 @@ public class PlaylistBuilder {
     }
 
     private void addElementToNewPlaylist(String[] elements) {
-        Song e = audioList.getSong(elements[1], elements[2]);
+        Song e = AudioReader.getInstance().getSong(elements[1], elements[2]);
         if (e != null){
             ArrayList<Song> songList = new ArrayList<>();
             songList.add(e);
@@ -86,12 +92,17 @@ public class PlaylistBuilder {
     }
 
     private void addElementToExistingPlaylist(String[] elements, Playlist playlist) {
-        Song e = audioList.getSong(elements[1], elements[2]);
+        Song e = AudioReader.getInstance().getSong(elements[1], elements[2]);
         if (e != null){
             playlist.addSong(e);
             Log.d(TAG, "addElementToExistingPlaylist: "  + elements[1] + " " + elements[2] + " added to " + elements[0] );
         } else {
             Log.d(TAG, "addElementToExistingPlaylist: " + elements[0] + " not found");
         }
+    }
+
+    public void addPlaylist(Playlist playlist) {
+        if (playlists.get(0).getPlaylistName().equals("You haven't got any playlist")) playlists.remove(0);
+        this.playlists.add(playlist);
     }
 }

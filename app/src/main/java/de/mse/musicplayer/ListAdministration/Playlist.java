@@ -15,6 +15,10 @@ public class Playlist {
         return playlistName;
     }
 
+    public void setPlaylistName(String playlistName) {
+        this.playlistName = playlistName;
+    }
+
     public ArrayList<Song> getPlaylistContent() {
         return playlistContent;
     }

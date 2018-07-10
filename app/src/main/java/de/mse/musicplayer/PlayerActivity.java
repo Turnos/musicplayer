@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.SeekBar;
 
 
-
 public class PlayerActivity extends Activity {
 
     private PlayerAdapter mPlayerAdapter;
@@ -22,19 +21,24 @@ public class PlayerActivity extends Activity {
         this.initializeUI();
         this.initializeSeekBar();
         this.initializePlaybackController();
+        if (getIntent().getBooleanExtra("Random", false)){
+            //TODO set a Random data source if random is true
+        }
     }
 
     private void initializeUI(){
         //Play button
-        Button playButton = this.findViewById(R.id.top_button);
+        final Button playButton = this.findViewById(R.id.top_button);
         playButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 // TODO implement Music.Play
                 if(mPlayerAdapter.isPlaying()){
                     mPlayerAdapter.pause();
+                    playButton.setText("PAUSE");
                 }else{
                     mPlayerAdapter.play();
+                    playButton.setText("PLAY");
                 }
             }
         });
@@ -127,6 +131,4 @@ public class PlayerActivity extends Activity {
             }
         }
     }
-
-
 }

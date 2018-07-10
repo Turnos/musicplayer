@@ -12,9 +12,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import de.mse.musicplayer.ListAdministration.AudioReader;
 import de.mse.musicplayer.ListAdministration.Song;
-
-import static de.mse.musicplayer.MainActivity.audioList;
 
 public class MediaPlayerHolder implements PlayerAdapter {
 
@@ -32,7 +31,7 @@ public class MediaPlayerHolder implements PlayerAdapter {
     public MediaPlayerHolder(Context context){
         mContext = context.getApplicationContext();
         //TODO Support Playlists & Artist Playlists
-        currentSongList = audioList.getList();
+        currentSongList = AudioReader.getInstance().getList();
         curPos = 0;
         mResourcePath = currentSongList.get(curPos).getUrl();
     }

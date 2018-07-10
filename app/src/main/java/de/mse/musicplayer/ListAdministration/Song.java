@@ -22,6 +22,12 @@ public class Song implements Parcelable{
         this.title = data[1];
         this.url = data[2];
     }
+
+    @Override
+    public String toString() {
+        return artist + " - " + title;
+    }
+
     public String getArtist() {
         return artist;
     }
@@ -56,4 +62,5 @@ public class Song implements Parcelable{
             return new Song[size];
         }
     };
+
 }

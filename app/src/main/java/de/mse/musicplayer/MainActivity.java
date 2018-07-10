@@ -15,17 +15,18 @@ import android.widget.Toast;
 
 import de.mse.musicplayer.ListAdministration.AudioReader;
 
+import static de.mse.musicplayer.ListAdministration.AudioReader.initializeAudioReader;
+
 public class MainActivity extends Activity {
 
     private static final String TAG = "MainActivity";
     private static final int MY_PERMISSION_REQUEST = 1;
-    public static AudioReader audioList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: " + this.checkPermissions());
-        this.initializeAudioReader();
+        this.initializeAudioList();
         this.initializeUI();
     }
 
@@ -39,7 +40,6 @@ public class MainActivity extends Activity {
                     if(ContextCompat.checkSelfPermission(MainActivity.this,
                             Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
-                        //TODO
                     }
                 }else{
                     //User denied Permission
@@ -82,9 +82,10 @@ public class MainActivity extends Activity {
         randomButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO change the target activity
-                // Intent switcher = new Intent(WelcomeFrame.this, ArtistsActivity.class);
-                // startActivity(switcher);
+                // TODO
+                Intent switcher = new Intent(MainActivity.this, PlayerActivity.class);
+                switcher.putExtra("Random", true);
+                startActivity(switcher);
             }
         });
 
@@ -104,6 +105,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent switcher = new Intent(MainActivity.this, PlaylistActivity.class);
+                switcher.putExtra("Playlistname", "Kendrick Llamar");
                 startActivity(switcher);
             }
         });
@@ -113,14 +115,19 @@ public class MainActivity extends Activity {
         infoButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //TODO change the target activity
+                //TODO implement Info
                 //Intent switcher = new Intent(WelcomeFrame.this, ArtistsActivity.class);
                 //startActivity(switcher);
             }
         });
     }
 
-    private void initializeAudioReader(){
-        audioList = new AudioReader(this, this);
+    private void initializeAudioList(){
+        initializeAudioReader(getApplicationContext());
+    }
+
+    @Override
+    public void onBackPressed() {
+        //NOTHING HAPPENS -> Workaround to deny the cycle between switching from PlaylistActivity and MainActivity
     }
 }

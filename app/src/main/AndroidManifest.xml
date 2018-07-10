@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.mse.musicplayer">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
 
@@ -18,9 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayerActivity"></activity>
-        <activity android:name=".ArtistsActivity"></activity>
-        <activity android:name=".PlaylistActivity"></activity>
+        <activity android:name=".PlayerActivity" />
+        <activity android:name=".ArtistsActivity" />
+        <activity android:name=".PlaylistActivity" />
+        <activity android:name=".EditPlaylistActivity"/>
     </application>
 
 </manifest>

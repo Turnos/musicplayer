@@ -17,7 +17,7 @@ import de.mse.musicplayer.R;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "RecyclerViewAdapter";
     private ArrayList<String> listOfArtistNames;
-    //private ArrayList<String> listOfImages = new ArrayList<>();
+    //private ArrayList<String> listOfImages = new ArrayList<>(); TODO optional
     private Context context;
 
     public RecyclerViewAdapter(Context context, ArrayList<String> listOfArtistNames) {
