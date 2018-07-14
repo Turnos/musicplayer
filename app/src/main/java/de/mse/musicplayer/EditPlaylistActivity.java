@@ -37,7 +37,7 @@ public class EditPlaylistActivity extends Activity {
     }
 
     private Playlist getPlaylistByName (String playlistName){
-        return PlaylistBuilder.getInstance().getPlaylistByName(playlistName);
+        return PlaylistBuilder.getInstance(getApplicationContext()).getPlaylistByName(playlistName);
     }
 
     private void initializeAudioList() {
@@ -74,7 +74,7 @@ public class EditPlaylistActivity extends Activity {
                         playlist.addAllSongs(adapter.getPlaylist());
                     } else { // creating playlist
                         playlist = new Playlist(playlistName, adapter.getPlaylist());
-                        PlaylistBuilder.getInstance().addPlaylist(playlist);
+                        PlaylistBuilder.getInstance(getApplicationContext()).addPlaylist(playlist);
                     }
                     persistChanges();
                     Intent switcher = new Intent(EditPlaylistActivity.this, PlaylistActivity.class);
@@ -92,7 +92,7 @@ public class EditPlaylistActivity extends Activity {
     private void persistChanges() {
         Log.d(TAG, "persistChanges");
         PlaylistWriter playlistWriter = new PlaylistWriter(EditPlaylistActivity.this);
-        playlistWriter.writePlaylistsToStorage(PlaylistBuilder.getInstance().getPlaylists());
+        playlistWriter.writePlaylistsToStorage(PlaylistBuilder.getInstance(getApplicationContext()).getPlaylists());
     }
 
     private void checkPlaylistSettings(ListView listView) {

@@ -68,8 +68,9 @@ public class AudioReader {
 
     public Song getSong(String artist, String title) {
         for (Song e : listOfTracks) {
-            if (e.getTitle() == title && e.getArtist() == artist) return e;
+            if (e.getTitle().equals(title) && e.getArtist().equals(artist)) return e;
         }
+        Log.d(TAG, "getSong: No Song found with " + artist + " - " + title);
         return null;
 
     }

@@ -1,5 +1,6 @@
 package de.mse.musicplayer.ListAdministration;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -14,14 +15,16 @@ public class PlaylistBuilder {
     private static final String TAG = "PlaylistBuilder ";
     private static PlaylistBuilder instance;
     private ArrayList<Playlist> playlists;
+    private Context context;
 
-    private PlaylistBuilder () {
+    private PlaylistBuilder (Context context) {
+        this.context = context;
         this.initializePlaylists();
     }
 
-    public static PlaylistBuilder getInstance(){
+    public static PlaylistBuilder getInstance(Context context){
         if (instance == null){
-            instance = new PlaylistBuilder();
+            instance = new PlaylistBuilder(context);
         }
         return instance;
     }
@@ -42,7 +45,7 @@ public class PlaylistBuilder {
         ArrayList <String> rawList = this.readFromStorage();
         String [] elements;
         for (String e: rawList){
-            elements = e.split("|");
+            elements = e.split("\\|");
             this.addElementToPlaylists(elements);
         }
     }
@@ -50,7 +53,8 @@ public class PlaylistBuilder {
     private ArrayList<String> readFromStorage (){
         ArrayList<String> list = new ArrayList<>();
         try {
-            FileInputStream inputStream = new FileInputStream (new File("playlists.txt"));
+            //FileInputStream inputStream = new FileInputStream (new File(context.getFilesDir(),"playlists.txt"));
+            FileInputStream inputStream = context.openFileInput("playlists.txt");
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String buffer;
@@ -68,11 +72,14 @@ public class PlaylistBuilder {
     }
 
     private void addElementToPlaylists(String[] elements) {
-        for (Playlist e: playlists){
-            if (e.getPlaylistName().equals(elements[0])){
-                this.addElementToExistingPlaylist(elements, e);
-            } else {
-                this.addElementToNewPlaylist(elements);
+        if(playlists.isEmpty()) this.addElementToNewPlaylist(elements);
+        else {
+            for (Playlist e : playlists) {
+                if (e.getPlaylistName().equals(elements[0])) {
+                    this.addElementToExistingPlaylist(elements, e);
+                } else {
+                    this.addElementToNewPlaylist(elements);
+                }
             }
         }
     }

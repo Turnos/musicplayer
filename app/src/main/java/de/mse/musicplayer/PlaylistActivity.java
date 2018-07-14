@@ -5,7 +5,6 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,10 +16,7 @@ import java.util.ArrayList;
 
 import de.mse.musicplayer.ListAdministration.Playlist;
 import de.mse.musicplayer.ListAdministration.PlaylistBuilder;
-import de.mse.musicplayer.ListAdministration.PlaylistWriter;
 import de.mse.musicplayer.layoutClasses.PlaylistAdapter;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class PlaylistActivity extends Activity{
 
@@ -78,7 +74,7 @@ public class PlaylistActivity extends Activity{
     }
 
     private void initializePlaylists() {
-        playlists = PlaylistBuilder.getInstance().getPlaylists();
+        playlists = PlaylistBuilder.getInstance(getApplicationContext()).getPlaylists();
         if (playlists.isEmpty()){
             playlists.add(new Playlist("You haven't got any playlist", null));
         }

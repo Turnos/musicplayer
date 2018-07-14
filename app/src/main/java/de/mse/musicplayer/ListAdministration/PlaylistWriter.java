@@ -18,7 +18,7 @@ public class PlaylistWriter {
 
     public void writePlaylistsToStorage (ArrayList<Playlist> playlists){
         try {
-            FileWriter writer = new FileWriter(new File( "playlists.txt")); //TODO THIS JUST HITS A READ-ONLY MEMORY
+            FileWriter writer = new FileWriter(new File( context.getFilesDir(),"playlists.txt")); //TODO THIS JUST HITS A READ-ONLY MEMORY
             for (Playlist e: playlists){
                 ArrayList<Song> playlist = e.getPlaylistContent();
                 for (Song p: playlist){
