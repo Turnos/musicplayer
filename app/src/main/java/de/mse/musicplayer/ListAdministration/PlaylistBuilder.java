@@ -54,7 +54,6 @@ public class PlaylistBuilder {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String buffer;
-            Log.d(TAG, "readFromStorage: " + reader.readLine());
             while ((buffer = reader.readLine() )!= null){
                 list.add(buffer);
                 Log.d(TAG, "readFromStorage: " + buffer);

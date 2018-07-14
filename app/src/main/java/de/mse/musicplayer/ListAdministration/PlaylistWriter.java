@@ -18,9 +18,7 @@ public class PlaylistWriter {
 
     public void writePlaylistsToStorage (ArrayList<Playlist> playlists){
         try {
-            String path = context.getFilesDir() + "";
-            FileWriter writer = new FileWriter(new File(path,  "playlists.txt"));
-            writer.write("This line is for testing purposes!\n");
+            FileWriter writer = new FileWriter(new File( "playlists.txt")); //TODO THIS JUST HITS A READ-ONLY MEMORY
             for (Playlist e: playlists){
                 ArrayList<Song> playlist = e.getPlaylistContent();
                 for (Song p: playlist){

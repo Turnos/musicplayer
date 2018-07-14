@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -52,9 +54,15 @@ public class PlaylistActivity extends Activity{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent switcher = new Intent(PlaylistActivity.this, EditPlaylistActivity.class);
-                switcher.putExtra("PlaylistName", playlists.get(position).getPlaylistName());
-                startActivity(switcher);
+                TextView textView = view.findViewById(R.id.lv_playlisttitle);
+                String title = textView.getText().toString();
+                if (title.equals("You haven't got any playlist")) {
+                    Toast.makeText(getApplicationContext(), "Can't edit", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent switcher = new Intent(PlaylistActivity.this, EditPlaylistActivity.class);
+                    switcher.putExtra("PlaylistName", playlists.get(position).getPlaylistName());
+                    startActivity(switcher);
+                }
             }
         });
 

@@ -42,23 +42,32 @@ public class EditPlaylistAdapter extends ArrayAdapter<Song> {
         }
         TextView songTitle = listItem.findViewById(R.id.textview_songdetails);
         final CheckBox checkBox = listItem.findViewById(R.id.checkbox_editplaylist);
-
         final Song song = audioList.get(position);
         songTitle.setText(song.toString());
+
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkBox.isChecked()){
+                if (checkBox.isChecked()){
+                    //add song to playlist / checking
+                    playlist.add(song);
+                    Log.d(TAG, "getView: Adding " + song.toString() + " Playlist length is " + playlist.size());
+                } else {
                     //remove song from playlist / unchecking
                     playlist.remove(audioList.get(position));
                     Log.d(TAG, "getView: Removing " + song.toString() + " Playlist length is " + playlist.size());
-                } else {
-                    //add song to playlist / checking
-                    playlist.add(audioList.get(position));
-                    Log.d(TAG, "getView: Adding " + song.toString() + " Playlist length is " + playlist.size());
                 }
             }
         });
+        checkingCheckBoxes(checkBox, song); //This lines seems odd but it's fkn key
         return listItem;
+    }
+
+    private void checkingCheckBoxes(CheckBox checkBox, Song song) {
+        for (Song e: playlist){
+            if (e.toString().equals(song.toString())){
+                checkBox.setChecked(true);
+            }
+        }
     }
 }

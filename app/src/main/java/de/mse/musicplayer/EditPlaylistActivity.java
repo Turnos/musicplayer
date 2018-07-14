@@ -49,7 +49,7 @@ public class EditPlaylistActivity extends Activity {
         final EditText editText = findViewById(R.id.edittext_playlistname);
         if (!getIntent().getStringExtra("PlaylistName").equals("")){
             String temp = getIntent().getStringExtra("PlaylistName");
-            this.playlist = getPlaylistByName(temp);
+            this.playlist = this.getPlaylistByName(temp);
             editText.setText(temp);
         } else {
             Log.d(TAG, "initializeUI: No Playlist found - " + getIntent().getStringExtra("PlaylistName"));
@@ -80,13 +80,12 @@ public class EditPlaylistActivity extends Activity {
                     Intent switcher = new Intent(EditPlaylistActivity.this, PlaylistActivity.class);
                     startActivity(switcher);
                 }
-
             }
         });
 
-        if (playlist != null){
-            checkPlaylistSettings(listView);
+        if (playlist != null && playlist.getPlaylistContent() != null){
             Log.d(TAG, "initializeUI: checking Checkboxes");
+            checkPlaylistSettings(listView);
         }
     }
 
@@ -100,16 +99,16 @@ public class EditPlaylistActivity extends Activity {
         //Checking the listView if a Song in the playlist is already selected and marking its CheckBox
         //It is very probable this code can get optimized since there are two for-Loops
         for (int i = 0; i < listView.getCount(); i++){
-            //TODO
             View v = listView.getAdapter().getView(i,null,null);
             TextView tv_songname = v.findViewById(R.id.textview_songdetails); //Accessing the TextView of the adapter element / Song-entry
             String songName = (String) (tv_songname.getText());
+            CheckBox checkBox = v.findViewById(R.id.checkbox_editplaylist);
             Log.d(TAG, "checkPlaylistSettings: " + songName);
             for (Song e: playlist.getPlaylistContent()){
                 if (e.toString().equals(songName)) {
-                    CheckBox checkBox = v.findViewById(R.id.checkbox_editplaylist);
+                    Log.d(TAG,"checkPlaylistSettings: setting check in CheckBox of " + songName);
+                    checkBox.setChecked(true);
                     checkBox.callOnClick();
-                    Log.d(TAG,"checkPlaylistSettings: checking CheckBox of " + songName);
                 }
             }
         }
