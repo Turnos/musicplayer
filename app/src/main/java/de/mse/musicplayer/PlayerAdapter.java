@@ -1,5 +1,9 @@
 package de.mse.musicplayer;
 
+import java.util.ArrayList;
+
+import de.mse.musicplayer.ListAdministration.Song;
+
 /**
  *  Allows {@link de.mse.musicplayer.PlayerActivity} to control media Playback of {@link MediaPlayerHolder}
  */
@@ -26,5 +30,7 @@ public interface PlayerAdapter {
     void previous();
 
     void shuffle();
+
+    void loadPlaylist(ArrayList<Song> playlist, int pos);
 
 }

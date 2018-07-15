@@ -8,11 +8,14 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import de.mse.musicplayer.ListAdministration.AudioReader;
+import de.mse.musicplayer.ListAdministration.Playlist;
 import de.mse.musicplayer.ListAdministration.Song;
 
 public class MediaPlayerHolder implements PlayerAdapter {
@@ -27,13 +30,24 @@ public class MediaPlayerHolder implements PlayerAdapter {
     private Runnable mSeekbarPositionUpdateTask;
     private ArrayList<Song> currentSongList; //Current SongList
     private int curPos; //current Position in SongList
+    private Timer timer;
 
-    public MediaPlayerHolder(Context context){
+    public MediaPlayerHolder(Context context, Playlist playlist, int pos){
         mContext = context.getApplicationContext();
         //TODO Support Playlists & Artist Playlists
+
         currentSongList = AudioReader.getInstance().getList();
+
         curPos = 0;
         mResourcePath = currentSongList.get(curPos).getUrl();
+    }
+
+    @Override
+    public void loadPlaylist(ArrayList<Song> playlist, int pos){
+        this.currentSongList = playlist;
+        this.curPos = pos;
+        mResourcePath = currentSongList.get(pos).getUrl();
+        this.reset();
     }
 
     private void initializeMediaPlayer(){
@@ -47,10 +61,12 @@ public class MediaPlayerHolder implements PlayerAdapter {
                         mPlaybackInfoListener.onStateChanged(PlaybackInfoListener.State.COMPLETED);
                         mPlaybackInfoListener.onPlaybackCompleted();
                     }
+                    next();
                 }
             });
         }
     }
+
 
     public void setPlaybackInfoListener(PlaybackInfoListener listener){
         mPlaybackInfoListener = listener;
@@ -101,6 +117,8 @@ public class MediaPlayerHolder implements PlayerAdapter {
         }catch(Exception e){
             Log.getStackTraceString(e);
         }
+
+        initializeProgressCallback();
     }
 
     @Override
@@ -127,6 +145,9 @@ public class MediaPlayerHolder implements PlayerAdapter {
                 mPlaybackInfoListener.onStateChanged(PlaybackInfoListener.State.PLAYING);
             }
             statUpdatingCallbackWithPosition();
+        }else{
+            loadMedia(mResourcePath);
+            play();
         }
     }
 
@@ -151,6 +172,8 @@ public class MediaPlayerHolder implements PlayerAdapter {
                 mPlaybackInfoListener.onStateChanged(PlaybackInfoListener.State.RESET);
             }
             stopUpdatingCallbackWithPosition(true);
+        }else{
+            loadMedia(mResourcePath);
         }
     }
 
@@ -193,6 +216,9 @@ public class MediaPlayerHolder implements PlayerAdapter {
             if(curPos != 0){
                 //Select Previous Song
                 mResourcePath = currentSongList.get(--curPos).getUrl();
+            }else{
+                curPos = currentSongList.size()-1;
+                mResourcePath = currentSongList.get(curPos).getUrl();
             }
             this.reset();
             this.play();

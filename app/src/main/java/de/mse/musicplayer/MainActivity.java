@@ -105,7 +105,6 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent switcher = new Intent(MainActivity.this, PlaylistActivity.class);
-                switcher.putExtra("Playlistname", "Kendrick Llamar");
                 startActivity(switcher);
             }
         });

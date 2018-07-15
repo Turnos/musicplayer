@@ -1,10 +1,19 @@
 package de.mse.musicplayer;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+
+import java.util.ArrayList;
+
+import de.mse.musicplayer.ListAdministration.Playlist;
+import de.mse.musicplayer.ListAdministration.Song;
 
 
 public class PlayerActivity extends Activity {
@@ -12,6 +21,7 @@ public class PlayerActivity extends Activity {
     private PlayerAdapter mPlayerAdapter;
     private SeekBar mSeekbarAudio;
     private boolean mUserIsSeeking = false;
+    final int PLAYLIST_REQUEST_CODE = 0;
 
 
     @Override
@@ -21,13 +31,40 @@ public class PlayerActivity extends Activity {
         this.initializeUI();
         this.initializeSeekBar();
         this.initializePlaybackController();
-        if (getIntent().getBooleanExtra("Random", false)){
-            //TODO set a Random data source if random is true
+        /*if (getIntent().getBooleanExtra("Random", false)){
+            //TODO set a Random data source if random is true, Edit: einfach die gesamte Liste spielen, geschieht automatisch
+            mPlayerAdapter.shuffle();
         }
+        */
+
     }
 
     private void initializeUI(){
         //Play button
+        ConstraintLayout conLayout = (ConstraintLayout) findViewById(R.id.conlayout);
+        conLayout.setOnTouchListener(new OnSwipeListener(this) {
+            AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+
+            @Override
+            public void onSwipeRight() {
+                mPlayerAdapter.next();
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                mPlayerAdapter.previous();
+            }
+
+            @Override
+            public void onSwipeTop() {
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
+            }
+
+            @Override
+            public void onSwipeBottom() {
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+            }
+        });
         final Button playButton = this.findViewById(R.id.top_button);
         playButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -48,7 +85,7 @@ public class PlayerActivity extends Activity {
         prevButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO implement Music.Back
+                mPlayerAdapter.previous();
             }
         });
 
@@ -57,7 +94,7 @@ public class PlayerActivity extends Activity {
         nextButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO implement Music.Next
+                mPlayerAdapter.next();
             }
         });
 
@@ -66,17 +103,35 @@ public class PlayerActivity extends Activity {
         shuffleButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO implement Shuffling the current playlist
-                //First release current MediaPlayer
-                mPlayerAdapter.release();
-                mPlayerAdapter.shuffle(); //then shuffle the current playlist
-
+                 mPlayerAdapter.shuffle();
 
             }
         });
 
         //SeekBar
         mSeekbarAudio = (SeekBar) findViewById(R.id.seekbar_audio);
+
+
+    }
+
+    public void openChangeplaylist(View view){
+        Intent intent = new Intent(PlayerActivity.this, ChangePlaylistActivity.class);
+        startActivityForResult(intent, PLAYLIST_REQUEST_CODE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == PLAYLIST_REQUEST_CODE){
+            if(resultCode == RESULT_OK){
+                ArrayList<Song> songlist = data.getParcelableArrayListExtra("songlist");
+                int songPos = data.getIntExtra("songPos", 0);
+                mPlayerAdapter.loadPlaylist(songlist, songPos);
+                mPlayerAdapter.play();
+            }
+        }
     }
 
     @Override
@@ -113,7 +168,7 @@ public class PlayerActivity extends Activity {
     }
 
     private void initializePlaybackController(){
-        MediaPlayerHolder mMediaPlayerHolder = new MediaPlayerHolder(this);
+        MediaPlayerHolder mMediaPlayerHolder = new MediaPlayerHolder(this,null, 0);
         mMediaPlayerHolder.setPlaybackInfoListener(new PlaybackListener());
         mPlayerAdapter = mMediaPlayerHolder;
     }
