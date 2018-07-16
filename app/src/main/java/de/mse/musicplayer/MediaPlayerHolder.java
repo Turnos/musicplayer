@@ -34,7 +34,6 @@ public class MediaPlayerHolder implements PlayerAdapter {
 
     public MediaPlayerHolder(Context context, Playlist playlist, int pos){
         mContext = context.getApplicationContext();
-        //TODO Support Playlists & Artist Playlists
 
         currentSongList = AudioReader.getInstance().getList();
         long seed = System.nanoTime();

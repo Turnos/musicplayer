@@ -43,7 +43,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.layoutRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add Code for MediaPlayer
                 Intent switcher = new Intent(context, ArtistSonglistActivity.class);
                 switcher.putExtra("Artist", artistName);
                 context.startActivity(switcher);

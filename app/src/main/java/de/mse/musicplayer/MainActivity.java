@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import de.mse.musicplayer.ListAdministration.AudioReader;
-
 import static de.mse.musicplayer.ListAdministration.AudioReader.initializeAudioReader;
 
 public class MainActivity extends Activity {
@@ -86,7 +84,6 @@ public class MainActivity extends Activity {
         randomButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO
                 Intent switcher = new Intent(MainActivity.this, PlayerActivity.class);
                 switcher.putExtra("Random", true);
                 startActivity(switcher);
@@ -110,17 +107,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent switcher = new Intent(MainActivity.this, PlaylistActivity.class);
                 startActivity(switcher);
-            }
-        });
-
-        //Info button - directs to options and help
-        Button infoButton = this.findViewById(R.id.bottom_button);
-        infoButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //TODO implement Info
-                //Intent switcher = new Intent(WelcomeFrame.this, ArtistsActivity.class);
-                //startActivity(switcher);
             }
         });
     }
