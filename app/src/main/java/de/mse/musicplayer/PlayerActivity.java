@@ -30,6 +30,7 @@ public class PlayerActivity extends Activity {
     private boolean mUserIsSeeking = false;
     private TextView mArtist, mTitle, mDuration;
     final int PLAYLIST_REQUEST_CODE = 0;
+    private Button playButton;
 
 
     @Override
@@ -40,13 +41,10 @@ public class PlayerActivity extends Activity {
         this.initializeSeekBar();
         this.initializePlaybackController();
         Intent intent = getIntent();
-        try{
-            ArrayList<Song> songlist = intent.getParcelableArrayListExtra("songlist");
-            int songPos = intent.getIntExtra("songPos", 0);
-            loadPlaylist(songlist, songPos);
-        }catch(Exception e){
-            Log.d(TAG, "No songlist in intent detected");
-        }
+        ArrayList<Song> songlist = intent.getParcelableArrayListExtra("songlist");
+        int songPos = intent.getIntExtra("songPos", 0);
+        if(songlist!=null)loadPlaylist(songlist, songPos);
+
     }
 
     private void initializeUI(){
@@ -78,18 +76,19 @@ public class PlayerActivity extends Activity {
             @Override
             public void doubleTap() {
                 mPlayerAdapter.reset();
+                playButton.setText("PLAY");
             }
         });
-        final Button playButton = this.findViewById(R.id.top_button);
+        playButton = this.findViewById(R.id.top_button);
         playButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if(mPlayerAdapter.isPlaying()){
                     mPlayerAdapter.pause();
-                    playButton.setText("PAUSE");
+                    playButton.setText("PLAY");
                 }else{
                     mPlayerAdapter.play();
-                    playButton.setText("PLAY");
+                    playButton.setText("PAUSE");
                 }
             }
         });
@@ -100,6 +99,8 @@ public class PlayerActivity extends Activity {
             @Override
             public void onClick(View v) {
                 mPlayerAdapter.previous();
+                if(mPlayerAdapter.isPlaying()) playButton.setText("PAUSE");
+                else playButton.setText("PLAY");
             }
         });
 
@@ -109,6 +110,8 @@ public class PlayerActivity extends Activity {
             @Override
             public void onClick(View v) {
                 mPlayerAdapter.next();
+                if(mPlayerAdapter.isPlaying()) playButton.setText("PAUSE");
+                else playButton.setText("PLAY");
             }
         });
 

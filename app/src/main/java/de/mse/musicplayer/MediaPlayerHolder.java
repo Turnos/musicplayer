@@ -45,7 +45,14 @@ public class MediaPlayerHolder implements PlayerAdapter {
 
     @Override
     public void loadPlaylist(ArrayList<Song> playlist, int pos){
-        this.currentSongList = playlist;
+        if(playlist == null){
+            currentSongList = AudioReader.getInstance().getList();
+            long seed = System.nanoTime();
+            Collections.shuffle(currentSongList, new Random(seed));
+        }else{
+            this.currentSongList = playlist;
+        }
+
         this.curPos = pos;
         mResourcePath = currentSongList.get(pos).getUrl();
         this.reset();
