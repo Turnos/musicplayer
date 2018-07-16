@@ -3,31 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".EditPlaylistActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:gravity="start"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp">
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edittext_playlistname"
+            android:hint="Your playlist name"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
 
         <Button
-            android:id="@+id/button_addplaylist"
+            android:id="@+id/button_createplaylist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add a new Playlist" />
+            android:text="Edit Playlist" />
 
         <ListView
-            android:id="@+id/listViewPlaylists"
+            android:id="@+id/listview_songoverview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+        </ListView>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

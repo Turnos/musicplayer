@@ -8,10 +8,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import de.mse.musicplayer.ListAdministration.AudioReader;
 import de.mse.musicplayer.ListAdministration.Song;
 import de.mse.musicplayer.layoutClasses.RecyclerViewAdapter;
-
-import static de.mse.musicplayer.MainActivity.audioList;
 
 
 public class ArtistsActivity extends Activity{
@@ -31,7 +30,7 @@ public class ArtistsActivity extends Activity{
 
     private ArrayList<String> initializeArtistNames() {
         ArrayList<String> artistList = new ArrayList<>();
-        ArrayList<Song> songList = audioList.getList();
+        ArrayList<Song> songList = AudioReader.getInstance().getList();
         for (Song e: songList){
             if (!artistList.contains(e.getArtist())){
                 Log.d(TAG, "initializeArtistNames: " + e.getArtist() + " added.");

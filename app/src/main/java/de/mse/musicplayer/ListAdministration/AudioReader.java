@@ -1,6 +1,7 @@
 package de.mse.musicplayer.ListAdministration;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,16 +13,23 @@ import java.util.ArrayList;
 
 public class AudioReader {
 
+    private static AudioReader instance;
     private Context context;
-    private Activity activity;
     private static final String TAG = "AudioReader";
 
     private ArrayList<Song> listOfTracks;
 
-    public AudioReader(Context context, Activity activity) {
+    private AudioReader(Context context) {
         this.context = context;
-        this.activity = activity;
         this.listOfTracks = this.getAllSongsFromStorage();
+    }
+
+    public static void initializeAudioReader(Context context){
+        instance = new AudioReader(context);
+    }
+
+    public static AudioReader getInstance(){
+        return instance;
     }
 
     public ArrayList<Song> getList() {
@@ -60,9 +68,18 @@ public class AudioReader {
 
     public Song getSong(String artist, String title) {
         for (Song e : listOfTracks) {
-            if (e.getTitle() == title && e.getArtist() == artist) return e;
+            if (e.getTitle().equals(title) && e.getArtist().equals(artist)) return e;
         }
+        Log.d(TAG, "getSong: No Song found with " + artist + " - " + title);
         return null;
 
+    }
+
+    public ArrayList<Song> getTracksOfArtist(String artist) {
+        ArrayList<Song> tracksOfArtist = new ArrayList<>();
+        for (Song e : listOfTracks){
+            if(e.getArtist().equals(artist)) tracksOfArtist.add(e);
+        }
+        return tracksOfArtist;
     }
 }

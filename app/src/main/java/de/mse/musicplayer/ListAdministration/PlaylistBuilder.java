@@ -11,20 +11,33 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static de.mse.musicplayer.MainActivity.audioList;
-
 public class PlaylistBuilder {
     private static final String TAG = "PlaylistBuilder ";
-    private Context context;
+    private static PlaylistBuilder instance;
     private ArrayList<Playlist> playlists;
+    private Context context;
 
-    public PlaylistBuilder (Context context) {
+    private PlaylistBuilder (Context context) {
         this.context = context;
         this.initializePlaylists();
     }
 
+    public static PlaylistBuilder getInstance(Context context){
+        if (instance == null){
+            instance = new PlaylistBuilder(context);
+        }
+        return instance;
+    }
+
     public ArrayList<Playlist> getPlaylists() {
         return playlists;
+    }
+
+    public Playlist getPlaylistByName (String playlistName){
+        for (Playlist e: playlists){
+            if (e.getPlaylistName().equals(playlistName)) return e;
+        }
+        return null;
     }
 
     private void initializePlaylists (){
@@ -32,23 +45,19 @@ public class PlaylistBuilder {
         ArrayList <String> rawList = this.readFromStorage();
         String [] elements;
         for (String e: rawList){
-            elements = e.split("|");
+            elements = e.split("\\|");
             this.addElementToPlaylists(elements);
         }
     }
 
     private ArrayList<String> readFromStorage (){
         ArrayList<String> list = new ArrayList<>();
-        //TODO delete this hardcode
-        list.add("Playlist|Artist|Title1");
-        list.add("Playlist|Artist|Title2");
-        list.add("Playlist|Artist|Title3");
         try {
-            FileInputStream inputStream = new FileInputStream (new File("playlists.txt"));
+            //FileInputStream inputStream = new FileInputStream (new File(context.getFilesDir(),"playlists.txt"));
+            FileInputStream inputStream = context.openFileInput("playlists.txt");
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String buffer;
-            Log.d(TAG, "readFromStorage: " + reader.readLine());
             while ((buffer = reader.readLine() )!= null){
                 list.add(buffer);
                 Log.d(TAG, "readFromStorage: " + buffer);
@@ -63,17 +72,20 @@ public class PlaylistBuilder {
     }
 
     private void addElementToPlaylists(String[] elements) {
-        for (Playlist e: playlists){
-            if (e.getPlaylistName().equals(elements[0])){
-                this.addElementToExistingPlaylist(elements, e);
-            } else {
-                this.addElementToNewPlaylist(elements);
+        if(playlists.isEmpty()) this.addElementToNewPlaylist(elements);
+        else {
+            for (Playlist e : playlists) {
+                if (e.getPlaylistName().equals(elements[0])) {
+                    this.addElementToExistingPlaylist(elements, e);
+                } else {
+                    this.addElementToNewPlaylist(elements);
+                }
             }
         }
     }
 
     private void addElementToNewPlaylist(String[] elements) {
-        Song e = audioList.getSong(elements[1], elements[2]);
+        Song e = AudioReader.getInstance().getSong(elements[1], elements[2]);
         if (e != null){
             ArrayList<Song> songList = new ArrayList<>();
             songList.add(e);
@@ -86,12 +98,17 @@ public class PlaylistBuilder {
     }
 
     private void addElementToExistingPlaylist(String[] elements, Playlist playlist) {
-        Song e = audioList.getSong(elements[1], elements[2]);
+        Song e = AudioReader.getInstance().getSong(elements[1], elements[2]);
         if (e != null){
             playlist.addSong(e);
             Log.d(TAG, "addElementToExistingPlaylist: "  + elements[1] + " " + elements[2] + " added to " + elements[0] );
         } else {
             Log.d(TAG, "addElementToExistingPlaylist: " + elements[0] + " not found");
         }
+    }
+
+    public void addPlaylist(Playlist playlist) {
+        if (playlists.get(0).getPlaylistName().equals("You haven't got any playlist")) playlists.remove(0);
+        this.playlists.add(playlist);
     }
 }
