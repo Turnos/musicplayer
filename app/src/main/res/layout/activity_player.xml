@@ -87,6 +87,10 @@
             android:layout_height="50dp"
             android:text="@string/Shuffle" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
         <Button
             android:id="@+id/button_changelist"
             android:layout_width="wrap_content"
