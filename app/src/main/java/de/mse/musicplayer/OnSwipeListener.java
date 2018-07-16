@@ -44,6 +44,15 @@ public class OnSwipeListener implements View.OnTouchListener {
             }
             return true;
         }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            doubleTap();
+            return true;
+        }
+    }
+
+    public void doubleTap(){
     }
     public void onSwipeRight() {
     }

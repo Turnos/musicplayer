@@ -199,8 +199,8 @@ public class MediaPlayerHolder implements PlayerAdapter {
 
     @Override
     public void next() {
-        //TODO Test Next Song
         if (mMediaPlayer != null) {
+            boolean playing = mMediaPlayer.isPlaying();
             if (curPos == (currentSongList.size() - 1)) {
                 //Restart list
                 curPos = 0;
@@ -209,14 +209,14 @@ public class MediaPlayerHolder implements PlayerAdapter {
                 mResourcePath = currentSongList.get(++curPos).getUrl();
             }
             this.reset();
-            this.play();
+            if(playing) this.play();
         }
     }
 
     @Override
     public void previous() {
-        //TODO Test Previous Song
         if(mMediaPlayer != null){
+            boolean playing = mMediaPlayer.isPlaying();
             if(curPos != 0){
                 //Select Previous Song
                 mResourcePath = currentSongList.get(--curPos).getUrl();
@@ -225,7 +225,7 @@ public class MediaPlayerHolder implements PlayerAdapter {
                 mResourcePath = currentSongList.get(curPos).getUrl();
             }
             this.reset();
-            this.play();
+            if(playing) this.play();
         }
     }
 

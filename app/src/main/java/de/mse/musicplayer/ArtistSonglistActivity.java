@@ -1,6 +1,7 @@
 package de.mse.musicplayer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,7 +34,10 @@ public class ArtistSonglistActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO start playing Playlist by using position
+                Intent intent = new Intent(ArtistSonglistActivity.this, PlayerActivity.class);
+                intent.putParcelableArrayListExtra("songlist", songArrayList);
+                intent.putExtra("songPos", position);
+                startActivity(intent);
             }
         });
         TextView textView = findViewById(R.id.textview_artistname);

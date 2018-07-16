@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TabLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -22,6 +24,7 @@ import de.mse.musicplayer.ListAdministration.Song;
 
 public class PlayerActivity extends Activity {
 
+    private static final String TAG = "PlayerActivity";
     private PlayerAdapter mPlayerAdapter;
     private SeekBar mSeekbarAudio;
     private boolean mUserIsSeeking = false;
@@ -36,6 +39,14 @@ public class PlayerActivity extends Activity {
         this.initializeUI();
         this.initializeSeekBar();
         this.initializePlaybackController();
+        Intent intent = getIntent();
+        try{
+            ArrayList<Song> songlist = intent.getParcelableArrayListExtra("songlist");
+            int songPos = intent.getIntExtra("songPos", 0);
+            loadPlaylist(songlist, songPos);
+        }catch(Exception e){
+            Log.d(TAG, "No songlist in intent detected");
+        }
     }
 
     private void initializeUI(){
@@ -63,6 +74,11 @@ public class PlayerActivity extends Activity {
             public void onSwipeBottom() {
                 audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
             }
+
+            @Override
+            public void doubleTap() {
+                mPlayerAdapter.reset();
+            }
         });
         final Button playButton = this.findViewById(R.id.top_button);
         playButton.setOnClickListener(new View.OnClickListener(){
@@ -70,10 +86,10 @@ public class PlayerActivity extends Activity {
             public void onClick(View v) {
                 if(mPlayerAdapter.isPlaying()){
                     mPlayerAdapter.pause();
-                    //playButton.setText("PAUSE"); //macht nur Fehler
+                    playButton.setText("PAUSE");
                 }else{
                     mPlayerAdapter.play();
-                    //playButton.setText("PLAY"); //macht nur Fehler
+                    playButton.setText("PLAY");
                 }
             }
         });
@@ -125,7 +141,6 @@ public class PlayerActivity extends Activity {
         startActivityForResult(intent, PLAYLIST_REQUEST_CODE);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -134,8 +149,7 @@ public class PlayerActivity extends Activity {
             if(resultCode == RESULT_OK){
                 ArrayList<Song> songlist = data.getParcelableArrayListExtra("songlist");
                 int songPos = data.getIntExtra("songPos", 0);
-                mPlayerAdapter.loadPlaylist(songlist, songPos);
-                mPlayerAdapter.play();
+                loadPlaylist(songlist, songPos);
             }
         }
     }
@@ -177,6 +191,11 @@ public class PlayerActivity extends Activity {
         MediaPlayerHolder mMediaPlayerHolder = new MediaPlayerHolder(this,null, 0);
         mMediaPlayerHolder.setPlaybackInfoListener(new PlaybackListener());
         mPlayerAdapter = mMediaPlayerHolder;
+    }
+
+    private void loadPlaylist(ArrayList<Song> songlist, int songPos){
+        mPlayerAdapter.loadPlaylist(songlist, songPos);
+        mPlayerAdapter.play();
     }
 
     public class PlaybackListener extends PlaybackInfoListener{
