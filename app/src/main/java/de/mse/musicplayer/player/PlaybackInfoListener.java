@@ -1,4 +1,4 @@
-package de.mse.musicplayer;
+package de.mse.musicplayer.player;
 
 import android.support.annotation.IntDef;
 

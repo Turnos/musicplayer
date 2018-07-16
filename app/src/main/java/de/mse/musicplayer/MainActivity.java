@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import de.mse.musicplayer.ListAdministration.PlaylistActivity;
+import de.mse.musicplayer.player.PlayerActivity;
 
 import static de.mse.musicplayer.ListAdministration.AudioReader.initializeAudioReader;
 

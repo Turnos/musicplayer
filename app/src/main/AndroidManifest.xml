@@ -19,10 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayerActivity" />
+        <activity android:name=".player.PlayerActivity" />
         <activity android:name=".ArtistsActivity" />
-        <activity android:name=".PlaylistActivity" />
-        <activity android:name=".EditPlaylistActivity" />
+        <activity android:name=".ListAdministration.PlaylistActivity" />
+        <activity android:name=".ListAdministration.EditPlaylistActivity" />
         <activity android:name=".ChangePlaylistActivity" />
         <activity android:name=".ViewPlaylistActivity" />
         <activity android:name=".ArtistSonglistActivity"></activity>

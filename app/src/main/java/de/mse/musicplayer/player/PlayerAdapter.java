@@ -1,11 +1,11 @@
-package de.mse.musicplayer;
+package de.mse.musicplayer.player;
 
 import java.util.ArrayList;
 
 import de.mse.musicplayer.ListAdministration.Song;
 
 /**
- *  Allows {@link de.mse.musicplayer.PlayerActivity} to control media Playback of {@link MediaPlayerHolder}
+ *  Allows {@link PlayerActivity} to control media Playback of {@link MediaPlayerHolder}
  */
 public interface PlayerAdapter {
 

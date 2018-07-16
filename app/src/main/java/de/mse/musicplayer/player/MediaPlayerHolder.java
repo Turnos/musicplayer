@@ -1,4 +1,4 @@
-package de.mse.musicplayer;
+package de.mse.musicplayer.player;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 import de.mse.musicplayer.ListAdministration.AudioReader;
 import de.mse.musicplayer.ListAdministration.Playlist;
 import de.mse.musicplayer.ListAdministration.Song;
+import de.mse.musicplayer.player.PlaybackInfoListener;
+import de.mse.musicplayer.player.PlayerAdapter;
 
 public class MediaPlayerHolder implements PlayerAdapter {
 

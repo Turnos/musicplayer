@@ -1,4 +1,4 @@
-package de.mse.musicplayer;
+package de.mse.musicplayer.player;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,19 +6,18 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.TabLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import de.mse.musicplayer.ChangePlaylistActivity;
+import de.mse.musicplayer.R;
+import de.mse.musicplayer.layoutClasses.OnSwipeListener;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import de.mse.musicplayer.ListAdministration.Playlist;
 import de.mse.musicplayer.ListAdministration.Song;
 
 
@@ -201,7 +200,7 @@ public class PlayerActivity extends Activity {
         mPlayerAdapter.play();
     }
 
-    public class PlaybackListener extends PlaybackInfoListener{
+    public class PlaybackListener extends PlaybackInfoListener {
         @Override
         void onDurationChanged(int duration, String artist, String title) {
             mSeekbarAudio.setMax(duration);

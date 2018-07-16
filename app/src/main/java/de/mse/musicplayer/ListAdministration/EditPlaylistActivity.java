@@ -1,26 +1,20 @@
-package de.mse.musicplayer;
+package de.mse.musicplayer.ListAdministration;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import de.mse.musicplayer.ListAdministration.AudioReader;
-import de.mse.musicplayer.ListAdministration.Playlist;
-import de.mse.musicplayer.ListAdministration.PlaylistBuilder;
-import de.mse.musicplayer.ListAdministration.PlaylistWriter;
-import de.mse.musicplayer.ListAdministration.Song;
+import de.mse.musicplayer.R;
 import de.mse.musicplayer.layoutClasses.EditPlaylistAdapter;
 
 public class EditPlaylistActivity extends Activity {

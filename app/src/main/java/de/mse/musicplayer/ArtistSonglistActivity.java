@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import de.mse.musicplayer.ListAdministration.AudioReader;
 import de.mse.musicplayer.ListAdministration.Song;
 import de.mse.musicplayer.layoutClasses.SonglistAdapter;
+import de.mse.musicplayer.player.PlayerActivity;
 
 public class ArtistSonglistActivity extends Activity {
 

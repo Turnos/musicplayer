@@ -1,4 +1,4 @@
-package de.mse.musicplayer;
+package de.mse.musicplayer.layoutClasses;
 
 import android.content.Context;
 import android.view.GestureDetector;

@@ -1,4 +1,4 @@
-package de.mse.musicplayer;
+package de.mse.musicplayer.ListAdministration;
 
 import android.app.Activity;
 import android.arch.lifecycle.Lifecycle;
@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import de.mse.musicplayer.ListAdministration.Playlist;
-import de.mse.musicplayer.ListAdministration.PlaylistBuilder;
+import de.mse.musicplayer.MainActivity;
+import de.mse.musicplayer.R;
 import de.mse.musicplayer.layoutClasses.PlaylistAdapter;
 
 public class PlaylistActivity extends Activity{
