@@ -2,6 +2,7 @@
     <string name="app_name">Musicplayer</string>
     <string name="Random">Random</string>
     <string name="Artists">Artists</string>
+    <string name="ArtistSonglist">ArtistSonglist</string>
     <string name="Lists">Lists</string>
     <string name="Info">Info</string>
     <string name="Play">Play</string>

@@ -75,7 +75,7 @@ public class AudioReader {
 
     }
 
-    public ArrayList<Song> getTracksOfArtist(String artist) {
+    public ArrayList<Song> getSongsOfArtist(String artist) {
         ArrayList<Song> tracksOfArtist = new ArrayList<>();
         for (Song e : listOfTracks){
             if(e.getArtist().equals(artist)) tracksOfArtist.add(e);

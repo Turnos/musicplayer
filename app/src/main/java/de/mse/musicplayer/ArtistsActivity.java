@@ -31,6 +31,7 @@ public class ArtistsActivity extends Activity{
     private ArrayList<String> initializeArtistNames() {
         ArrayList<String> artistList = new ArrayList<>();
         ArrayList<Song> songList = AudioReader.getInstance().getList();
+        artistList.add("All");
         for (Song e: songList){
             if (!artistList.contains(e.getArtist())){
                 Log.d(TAG, "initializeArtistNames: " + e.getArtist() + " added.");

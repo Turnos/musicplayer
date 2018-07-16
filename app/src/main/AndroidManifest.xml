@@ -24,7 +24,8 @@
         <activity android:name=".PlaylistActivity" />
         <activity android:name=".EditPlaylistActivity" />
         <activity android:name=".ChangePlaylistActivity" />
-        <activity android:name=".ViewPlaylistActivity"></activity>
+        <activity android:name=".ViewPlaylistActivity" />
+        <activity android:name=".ArtistSonglistActivity"></activity>
     </application>
 
 </manifest>

@@ -72,13 +72,16 @@ public class PlaylistBuilder {
     }
 
     private void addElementToPlaylists(String[] elements) {
-        if(playlists.isEmpty()) this.addElementToNewPlaylist(elements);
-        else {
-            for (Playlist e : playlists) {
-                if (e.getPlaylistName().equals(elements[0])) {
-                    this.addElementToExistingPlaylist(elements, e);
-                } else {
-                    this.addElementToNewPlaylist(elements);
+        if (elements.length == 3){
+            if(playlists.isEmpty())
+                this.addElementToNewPlaylist(elements);
+            else {
+                for (Playlist e : playlists) {
+                    if (e.getPlaylistName().equals(elements[0])) {
+                        this.addElementToExistingPlaylist(elements, e);
+                    } else {
+                        this.addElementToNewPlaylist(elements);
+                    }
                 }
             }
         }

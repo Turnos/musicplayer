@@ -1,6 +1,7 @@
 package de.mse.musicplayer.layoutClasses;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import de.mse.musicplayer.ArtistSonglistActivity;
+import de.mse.musicplayer.ArtistsActivity;
 import de.mse.musicplayer.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -35,12 +38,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: item is added to the list.");
-        holder.entryName.setText(listOfArtistNames.get(position));
+        final String artistName = listOfArtistNames.get(position);
+        holder.entryName.setText(artistName);
         holder.layoutRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO add Code for MediaPlayer
-                Log.d(TAG, "onClick: Entry was clicked on: " + listOfArtistNames.get(position));
+                Intent switcher = new Intent(context, ArtistSonglistActivity.class);
+                switcher.putExtra("Artist", artistName);
+                context.startActivity(switcher);
+                Log.d(TAG, "onClick: Entry was clicked on: " + artistName);
             }
         });
     }
