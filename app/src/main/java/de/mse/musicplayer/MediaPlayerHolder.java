@@ -37,6 +37,8 @@ public class MediaPlayerHolder implements PlayerAdapter {
         //TODO Support Playlists & Artist Playlists
 
         currentSongList = AudioReader.getInstance().getList();
+        long seed = System.nanoTime();
+        Collections.shuffle(currentSongList, new Random(seed));
 
         curPos = 0;
         mResourcePath = currentSongList.get(curPos).getUrl();
@@ -181,7 +183,9 @@ public class MediaPlayerHolder implements PlayerAdapter {
     public void initializeProgressCallback() {
         final int duration = mMediaPlayer.getDuration();
         if(mPlaybackInfoListener != null){
-            mPlaybackInfoListener.onDurationChanged(duration);
+            mPlaybackInfoListener.onDurationChanged(duration,
+                    currentSongList.get(curPos).getArtist(),
+                    currentSongList.get(curPos).getTitle());
             mPlaybackInfoListener.onPositionChanged(0);
         }
     }
@@ -227,13 +231,11 @@ public class MediaPlayerHolder implements PlayerAdapter {
 
     @Override
     public void shuffle() {
-        //TODO Test Shuffle
-            long seed = System.nanoTime();
-            Collections.shuffle(currentSongList, new Random(seed));
-            curPos = 0;
-            mResourcePath = currentSongList.get(curPos).getUrl();
-            this.reset();
-            this.play();
-
+        long seed = System.nanoTime();
+        Collections.shuffle(currentSongList, new Random(seed));
+        curPos = 0;
+        mResourcePath = currentSongList.get(curPos).getUrl();
+        this.reset();
+        this.play();
     }
 }

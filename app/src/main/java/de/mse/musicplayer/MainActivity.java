@@ -25,9 +25,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: " + this.checkPermissions());
-        this.initializeAudioList();
-        this.initializeUI();
+
+        this.checkPermissions();
+        //Log.d(TAG, "onCreate: " + this.checkPermissions());
     }
 
     @Override
@@ -40,6 +40,8 @@ public class MainActivity extends Activity {
                     if(ContextCompat.checkSelfPermission(MainActivity.this,
                             Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
+                        this.initializeAudioList();
+                        this.initializeUI();
                     }
                 }else{
                     //User denied Permission
@@ -68,6 +70,8 @@ public class MainActivity extends Activity {
         }else{
             //permissions already granted, you are ready to read EXTERNAL_STORAGE
             Log.d(TAG, "checkPermissions: TRUE");
+            this.initializeAudioList();
+            this.initializeUI();
             return true;
         }
         Log.d(TAG, "checkPermissions: FALSE");

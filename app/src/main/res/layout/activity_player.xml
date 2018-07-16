@@ -26,22 +26,19 @@
                 android:id="@+id/artist_textfield"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"
-                android:text="@string/player_artist" />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/title_textfield"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"
-                android:text="@string/player_title" />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/length_textfield"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"
-                android:text="@string/player_length" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <SeekBar

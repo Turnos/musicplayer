@@ -49,9 +49,11 @@ public class ChangePlaylistActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ChangePlaylistActivity.this, ViewPlaylistActivity.class);
-                intent.putParcelableArrayListExtra("songlist", playlists.get(position).getPlaylistContent());
-                startActivityForResult(intent, PLAYLIST_REQUEST_CODE);
+                if(!playlists.get(position).getPlaylistName().equals("You haven't got any playlist")) {
+                    Intent intent = new Intent(ChangePlaylistActivity.this, ViewPlaylistActivity.class);
+                    intent.putParcelableArrayListExtra("songlist", playlists.get(position).getPlaylistContent());
+                    startActivityForResult(intent, PLAYLIST_REQUEST_CODE);
+                }
             }
         });
     }

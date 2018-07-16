@@ -5,6 +5,8 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import de.mse.musicplayer.ListAdministration.Song;
+
 public abstract class PlaybackInfoListener {
 
     @IntDef({State.INVALID, State.PLAYING, State.PAUSED, State.RESET, State.COMPLETED})
@@ -17,7 +19,7 @@ public abstract class PlaybackInfoListener {
         int COMPLETED = 3;
     }
 
-    void onDurationChanged(int duration){
+    void onDurationChanged(int duration, String artist, String title){
 
     }
 

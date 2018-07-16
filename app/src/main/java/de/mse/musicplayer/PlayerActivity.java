@@ -9,8 +9,12 @@ import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import de.mse.musicplayer.ListAdministration.Playlist;
 import de.mse.musicplayer.ListAdministration.Song;
@@ -21,6 +25,7 @@ public class PlayerActivity extends Activity {
     private PlayerAdapter mPlayerAdapter;
     private SeekBar mSeekbarAudio;
     private boolean mUserIsSeeking = false;
+    private TextView mArtist, mTitle, mDuration;
     final int PLAYLIST_REQUEST_CODE = 0;
 
 
@@ -31,12 +36,6 @@ public class PlayerActivity extends Activity {
         this.initializeUI();
         this.initializeSeekBar();
         this.initializePlaybackController();
-        /*if (getIntent().getBooleanExtra("Random", false)){
-            //TODO set a Random data source if random is true, Edit: einfach die gesamte Liste spielen, geschieht automatisch
-            mPlayerAdapter.shuffle();
-        }
-        */
-
     }
 
     private void initializeUI(){
@@ -69,13 +68,12 @@ public class PlayerActivity extends Activity {
         playButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO implement Music.Play
                 if(mPlayerAdapter.isPlaying()){
                     mPlayerAdapter.pause();
-                    playButton.setText("PAUSE");
+                    //playButton.setText("PAUSE"); //macht nur Fehler
                 }else{
                     mPlayerAdapter.play();
-                    playButton.setText("PLAY");
+                    //playButton.setText("PLAY"); //macht nur Fehler
                 }
             }
         });
@@ -111,6 +109,14 @@ public class PlayerActivity extends Activity {
         //SeekBar
         mSeekbarAudio = (SeekBar) findViewById(R.id.seekbar_audio);
 
+        //Artist TextView
+        mArtist = (TextView) findViewById(R.id.artist_textfield);
+
+        //Title TextView
+        mTitle = (TextView) findViewById(R.id.title_textfield);
+
+        //Duration TextView
+        mDuration = (TextView) findViewById(R.id.length_textfield);
 
     }
 
@@ -175,8 +181,14 @@ public class PlayerActivity extends Activity {
 
     public class PlaybackListener extends PlaybackInfoListener{
         @Override
-        void onDurationChanged(int duration) {
+        void onDurationChanged(int duration, String artist, String title) {
             mSeekbarAudio.setMax(duration);
+            mArtist.setText(artist);
+            mTitle.setText(title);
+            mDuration.setText(String.format("%d:%d", TimeUnit.MILLISECONDS.toMinutes(duration),
+                            TimeUnit.MILLISECONDS.toSeconds(duration)-
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))));
+
         }
 
         @Override
