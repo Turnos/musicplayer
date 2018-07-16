@@ -14,7 +14,7 @@ public class Song implements Parcelable{
         this.url = url;
     }
 
-    public Song(Parcel in){
+    private Song(Parcel in){
         String[] data = new String[3];
 
         in.readStringArray(data);

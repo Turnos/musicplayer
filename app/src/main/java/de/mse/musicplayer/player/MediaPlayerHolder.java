@@ -14,14 +14,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import de.mse.musicplayer.ListAdministration.AudioReader;
-import de.mse.musicplayer.ListAdministration.Playlist;
 import de.mse.musicplayer.ListAdministration.Song;
-import de.mse.musicplayer.player.PlaybackInfoListener;
-import de.mse.musicplayer.player.PlayerAdapter;
 
 public class MediaPlayerHolder implements PlayerAdapter {
 
-    public static final int PLAYBACK_POSITION_REFRESH_INTERVAL_MS = 1000;
+    private static final int PLAYBACK_POSITION_REFRESH_INTERVAL_MS = 1000;
 
     private final Context mContext;
     private MediaPlayer mMediaPlayer;
@@ -33,7 +30,7 @@ public class MediaPlayerHolder implements PlayerAdapter {
     private int curPos; //current Position in SongList
     private Timer timer;
 
-    public MediaPlayerHolder(Context context, Playlist playlist, int pos){
+    public MediaPlayerHolder(Context context){
         mContext = context.getApplicationContext();
 
         currentSongList = AudioReader.getInstance().getList();

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,10 +18,10 @@ import de.mse.musicplayer.layoutClasses.PlaylistAdapter;
 
 public class ChangePlaylistActivity extends Activity {
 
-    ArrayList<Playlist> playlists;
-    ListView listView;
-    PlaylistAdapter adapter;
-    final int PLAYLIST_REQUEST_CODE  = 0;
+    private ArrayList<Playlist> playlists;
+    private ListView listView;
+    private PlaylistAdapter adapter;
+    private final int PLAYLIST_REQUEST_CODE  = 0;
 
 
     @Override

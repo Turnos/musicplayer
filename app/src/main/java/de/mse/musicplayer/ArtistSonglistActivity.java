@@ -17,8 +17,8 @@ import de.mse.musicplayer.player.PlayerActivity;
 
 public class ArtistSonglistActivity extends Activity {
 
-    ListView listView;
-    ArrayList<Song> songArrayList;
+    private ListView listView;
+    private ArrayList<Song> songArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

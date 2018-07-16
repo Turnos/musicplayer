@@ -1,7 +1,5 @@
 package de.mse.musicplayer.ListAdministration;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;

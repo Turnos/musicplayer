@@ -20,9 +20,9 @@ import de.mse.musicplayer.layoutClasses.PlaylistAdapter;
 
 public class PlaylistActivity extends Activity{
 
-    PlaylistAdapter adapter;
-    ListView listView;
-    ArrayList<Playlist> playlists;
+    private PlaylistAdapter adapter;
+    private ListView listView;
+    private ArrayList<Playlist> playlists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

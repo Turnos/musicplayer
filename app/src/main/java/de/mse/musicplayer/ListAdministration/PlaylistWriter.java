@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PlaylistWriter {
+class PlaylistWriter {
     private static final String LOG = "PlaylistWriter";
     private Context context;
 

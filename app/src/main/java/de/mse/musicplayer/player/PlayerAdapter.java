@@ -7,7 +7,7 @@ import de.mse.musicplayer.ListAdministration.Song;
 /**
  *  Allows {@link PlayerActivity} to control media Playback of {@link MediaPlayerHolder}
  */
-public interface PlayerAdapter {
+interface PlayerAdapter {
 
     void loadMedia(String ressourcePath);
 

@@ -52,14 +52,14 @@ public class OnSwipeListener implements View.OnTouchListener {
         }
     }
 
-    public void doubleTap(){
+    protected void doubleTap(){
     }
-    public void onSwipeRight() {
+    protected void onSwipeRight() {
     }
-    public void onSwipeLeft() {
+    protected void onSwipeLeft() {
     }
-    public void onSwipeTop() {
+    protected void onSwipeTop() {
     }
-    public void onSwipeBottom() {
+    protected void onSwipeBottom() {
     }
 }

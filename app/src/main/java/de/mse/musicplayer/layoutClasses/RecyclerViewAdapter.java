@@ -14,7 +14,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.mse.musicplayer.ArtistSonglistActivity;
-import de.mse.musicplayer.ArtistsActivity;
 import de.mse.musicplayer.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -31,8 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_listitem, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -61,7 +59,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView entryName;
         RelativeLayout layoutRecyclerView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             entryName = itemView.findViewById(R.id.txt_itemtext);
             layoutRecyclerView = itemView.findViewById(R.id.layout_RecyclerView);

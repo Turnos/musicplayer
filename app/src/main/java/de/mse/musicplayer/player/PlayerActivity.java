@@ -23,12 +23,11 @@ import de.mse.musicplayer.ListAdministration.Song;
 
 public class PlayerActivity extends Activity {
 
-    private static final String TAG = "PlayerActivity";
     private PlayerAdapter mPlayerAdapter;
     private SeekBar mSeekbarAudio;
     private boolean mUserIsSeeking = false;
     private TextView mArtist, mTitle, mDuration;
-    final int PLAYLIST_REQUEST_CODE = 0;
+    private final int PLAYLIST_REQUEST_CODE = 0;
     private Button playButton;
 
 
@@ -190,7 +189,7 @@ public class PlayerActivity extends Activity {
     }
 
     private void initializePlaybackController(){
-        MediaPlayerHolder mMediaPlayerHolder = new MediaPlayerHolder(this,null, 0);
+        MediaPlayerHolder mMediaPlayerHolder = new MediaPlayerHolder(this);
         mMediaPlayerHolder.setPlaybackInfoListener(new PlaybackListener());
         mPlayerAdapter = mMediaPlayerHolder;
     }
@@ -200,7 +199,7 @@ public class PlayerActivity extends Activity {
         mPlayerAdapter.play();
     }
 
-    public class PlaybackListener extends PlaybackInfoListener {
+    class PlaybackListener extends PlaybackInfoListener {
         @Override
         void onDurationChanged(int duration, String artist, String title) {
             mSeekbarAudio.setMax(duration);
